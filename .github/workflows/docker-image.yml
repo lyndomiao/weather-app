@@ -22,6 +22,12 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-    
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: weather-app-0.0.1-SNAPSHOT
+          path: '${{ github.workspace }}/target/*.jar'
+          
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag weather-app:$(date +%s)
+        run: docker build . --file ./build/Dockerfile --tag weather-app:$(date +%s)
